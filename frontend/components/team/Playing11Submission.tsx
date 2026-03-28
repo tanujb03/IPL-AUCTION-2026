@@ -83,9 +83,9 @@ function validateSquad(players: Player[]): { valid: boolean; errors: string[] } 
 
 export default function Playing11Submission({ teamId, squadCount, purchasedPlayers, auctionPhase, onSuccess }: Props) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedIds, setSelectedIds] = useState<number[]>([]);
-    const [captainId, setCaptainId] = useState<number | null>(null);
-    const [vcId, setVcId] = useState<number | null>(null);
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const [captainId, setCaptainId] = useState<string | null>(null);
+    const [vcId, setVcId] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
@@ -96,7 +96,7 @@ export default function Playing11Submission({ teamId, squadCount, purchasedPlaye
     // Squad validation MUST be called before any early returns (Rules of Hooks)
     const squadValidation = useMemo(() => validateSquad(purchasedPlayers), [purchasedPlayers]);
 
-    const toggleSelection = (id: number) => {
+    const toggleSelection = (id: string) => {
         if (selectedIds.includes(id)) {
             setSelectedIds(prev => prev.filter(x => x !== id));
             if (captainId === id) setCaptainId(null);
@@ -108,7 +108,7 @@ export default function Playing11Submission({ teamId, squadCount, purchasedPlaye
         }
     };
 
-    const handleRoleAssign = (id: number, role: 'C' | 'VC') => {
+    const handleRoleAssign = (id: string, role: 'C' | 'VC') => {
         if (!selectedIds.includes(id)) return;
         
         if (role === 'C') {
@@ -138,7 +138,7 @@ export default function Playing11Submission({ teamId, squadCount, purchasedPlaye
             return;
         }
 
-        const selectedPlayersList = purchasedPlayers.filter(p => selectedIds.includes(p.rank));
+        const selectedPlayersList = purchasedPlayers.filter(p => selectedIds.includes(p.id));
         let wkCount = 0;
         let osCount = 0;
         selectedPlayersList.forEach(p => {
@@ -157,7 +157,7 @@ export default function Playing11Submission({ teamId, squadCount, purchasedPlaye
 
         setLoading(true);
         try {
-            await lockLineup(teamId, selectedIds.map(String), String(captainId), String(vcId));
+            await lockLineup(teamId, selectedIds, captainId, vcId);
             setSuccessMessage('Playing XI successfully locked!');
             window.alert('✅ Squad locked successfully! You can close this modal.');
             setTimeout(() => {
@@ -310,18 +310,18 @@ export default function Playing11Submission({ teamId, squadCount, purchasedPlaye
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
                                     {purchasedPlayers.map((player) => {
-                                        const isSelected = selectedIds.includes(player.rank);
-                                        const isC = captainId === player.rank;
-                                        const isVC = vcId === player.rank;
+                                        const isSelected = selectedIds.includes(player.id);
+                                        const isC = captainId === player.id;
+                                        const isVC = vcId === player.id;
                                         return (
                                             <div 
-                                                key={player.rank}
+                                                key={player.id}
                                                 className={`p-3 rounded-xl border flex flex-col justify-between transition-all cursor-pointer ${
                                                     isSelected 
                                                         ? 'bg-[#2bb5cc]/10 border-[#2bb5cc]/40' 
                                                         : 'bg-white/5 border-white/10 hover:border-white/20'
                                                 }`}
-                                                onClick={() => toggleSelection(player.rank)}
+                                                onClick={() => toggleSelection(player.id)}
                                             >
                                                 <div className="flex justify-between items-start mb-2">
                                                     <div>
@@ -343,7 +343,7 @@ export default function Playing11Submission({ teamId, squadCount, purchasedPlaye
                                                 {isSelected && (
                                                     <div className="flex gap-2 mt-2" onClick={e => e.stopPropagation()}>
                                                         <button 
-                                                            onClick={() => handleRoleAssign(player.rank, 'C')}
+                                                            onClick={() => handleRoleAssign(player.id, 'C')}
                                                             className={`flex-1 py-1 rounded border text-xs font-black transition-colors ${
                                                                 isC 
                                                                     ? 'bg-[#f5d569]/20 border-[#f5d569] text-[#f5d569]' 
@@ -353,7 +353,7 @@ export default function Playing11Submission({ teamId, squadCount, purchasedPlaye
                                                             CAPTAIN
                                                         </button>
                                                         <button 
-                                                            onClick={() => handleRoleAssign(player.rank, 'VC')}
+                                                            onClick={() => handleRoleAssign(player.id, 'VC')}
                                                             className={`flex-1 py-1 rounded border text-xs font-black transition-colors ${
                                                                 isVC 
                                                                     ? 'bg-purple-500/20 border-purple-500 text-purple-400' 

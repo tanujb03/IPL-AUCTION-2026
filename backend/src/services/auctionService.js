@@ -220,6 +220,14 @@ async function sellPlayer(playerId, teamId, pricePaid, isAdminOverride = false) 
             }
         });
 
+        // 13b. Unveil riddle player if applicable
+        if (player.is_riddle) {
+            await tx.player.update({
+                where: { id: playerId },
+                data: { is_riddle: false }
+            });
+        }
+
         // 14. Reset auction state for next player + track last sold
         await tx.auctionState.update({
             where: { id: 1 },

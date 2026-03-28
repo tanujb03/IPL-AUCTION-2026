@@ -1,0 +1,129 @@
+﻿Using standard PostgreSQL client (Development)
+≡ƒÜÇ Starting Final Standings Simulation...
+
+≡ƒôè Player Pool: 159 total ΓÇö BAT:34 BOWL:62 AR:44 WK:19 | OS:51 IND:108
+
+≡ƒôï Team India ΓÇö Squad (15): BAT:3 BOWL:7 AR:3 WK:2 | OS:4 IND:11
+   ΓööΓöÇ Top 11 (11): BAT:3 BOWL:4 AR:2 WK:2 | OS:3 IND:8
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Juliet ΓÇö Squad (15): BAT:4 BOWL:6 AR:3 WK:2 | OS:5 IND:10
+   ΓööΓöÇ Top 11 (11): BAT:4 BOWL:2 AR:3 WK:2 | OS:4 IND:7
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Echo ΓÇö Squad (15): BAT:3 BOWL:6 AR:4 WK:2 | OS:5 IND:10
+   ΓööΓöÇ Top 11 (11): BAT:1 BOWL:5 AR:3 WK:2 | OS:4 IND:7
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Alpha ΓÇö Squad (15): BAT:3 BOWL:5 AR:5 WK:2 | OS:5 IND:10
+   ΓööΓöÇ Top 11 (11): BAT:2 BOWL:3 AR:4 WK:2 | OS:3 IND:8
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Bravo ΓÇö Squad (15): BAT:3 BOWL:6 AR:4 WK:2 | OS:5 IND:10
+   ΓööΓöÇ Top 11 (11): BAT:3 BOWL:2 AR:4 WK:2 | OS:3 IND:8
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Charlie ΓÇö Squad (15): BAT:3 BOWL:6 AR:4 WK:2 | OS:4 IND:11
+   ΓööΓöÇ Top 11 (11): BAT:1 BOWL:5 AR:3 WK:2 | OS:4 IND:7
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Delta ΓÇö Squad (15): BAT:4 BOWL:6 AR:3 WK:2 | OS:4 IND:11
+   ΓööΓöÇ Top 11 (11): BAT:4 BOWL:4 AR:1 WK:2 | OS:3 IND:8
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Foxtrot ΓÇö Squad (15): BAT:4 BOWL:6 AR:3 WK:2 | OS:5 IND:10
+   ΓööΓöÇ Top 11 (11): BAT:2 BOWL:4 AR:3 WK:2 | OS:3 IND:8
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Golf ΓÇö Squad (15): BAT:3 BOWL:5 AR:5 WK:2 | OS:5 IND:10
+   ΓööΓöÇ Top 11 (11): BAT:3 BOWL:3 AR:3 WK:2 | OS:3 IND:8
+   Γ£à Lineup locked successfully
+
+≡ƒôï Team Hotel ΓÇö Squad (15): BAT:4 BOWL:6 AR:4 WK:1 | OS:5 IND:10
+   ΓööΓöÇ Top 11 (11): BAT:1 BOWL:6 AR:3 WK:1 | OS:4 IND:7
+   Γ£à Lineup locked successfully
+
+≡ƒôè Total players assigned: 150 / 159
+
+≡ƒÅå LEADERBOARD RESULTS
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+1. Team Alpha | Total Score: 1862.98
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1614.17
+   - Captain Bonus (rating^1.15): 152.15
+   - Vice Captain Bonus (0.5 * rating^1.15): 67.28
+   - Squad Balance Bonus (30 - Penalty*4): 10
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 16.22
+   - Brand Bonus (NormalizedBrand * 5): 3.14
+2. Team Juliet | Total Score: 1815.93
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1521.2
+   - Captain Bonus (rating^1.15): 188.1
+   - Vice Captain Bonus (0.5 * rating^1.15): 74.97
+   - Squad Balance Bonus (30 - Penalty*4): 18
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 10.34
+   - Brand Bonus (NormalizedBrand * 5): 3.32
+3. Team Foxtrot | Total Score: 1792.46
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1487.02
+   - Captain Bonus (rating^1.15): 188.1
+   - Vice Captain Bonus (0.5 * rating^1.15): 79.41
+   - Squad Balance Bonus (30 - Penalty*4): 18
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 15.32
+   - Brand Bonus (NormalizedBrand * 5): 4.61
+4. Team Golf | Total Score: 1757.56
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1498.09
+   - Captain Bonus (rating^1.15): 174.5
+   - Vice Captain Bonus (0.5 * rating^1.15): 57.57
+   - Squad Balance Bonus (30 - Penalty*4): 10
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 12.4
+   - Brand Bonus (NormalizedBrand * 5): 5
+5. Team Bravo | Total Score: 1708.69
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1449.73
+   - Captain Bonus (rating^1.15): 132.39
+   - Vice Captain Bonus (0.5 * rating^1.15): 86.12
+   - Squad Balance Bonus (30 - Penalty*4): 18
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 19.64
+   - Brand Bonus (NormalizedBrand * 5): 2.79
+6. Team India | Total Score: 1698.65
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1491.17
+   - Captain Bonus (rating^1.15): 117.28
+   - Vice Captain Bonus (0.5 * rating^1.15): 64.03
+   - Squad Balance Bonus (30 - Penalty*4): 14
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 9.58
+   - Brand Bonus (NormalizedBrand * 5): 2.58
+7. Team Delta | Total Score: 1643.32
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1416.85
+   - Captain Bonus (rating^1.15): 123.73
+   - Vice Captain Bonus (0.5 * rating^1.15): 70.56
+   - Squad Balance Bonus (30 - Penalty*4): 22
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 8.05
+   - Brand Bonus (NormalizedBrand * 5): 2.13
+8. Team Charlie | Total Score: 1642.34
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1447.76
+   - Captain Bonus (rating^1.15): 102.43
+   - Vice Captain Bonus (0.5 * rating^1.15): 55.44
+   - Squad Balance Bonus (30 - Penalty*4): 22
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 10.6
+   - Brand Bonus (NormalizedBrand * 5): 4.11
+9. Team Echo | Total Score: 1621.1
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1391.97
+   - Captain Bonus (rating^1.15): 125.89
+   - Vice Captain Bonus (0.5 * rating^1.15): 74.97
+   - Squad Balance Bonus (30 - Penalty*4): 18
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 7.18
+   - Brand Bonus (NormalizedBrand * 5): 3.09
+10. Team Hotel | Total Score: 1545.78
+   Detailed Calculation:
+   - Base Score (╬ú rating^1.15 * weight): 1323.26
+   - Captain Bonus (rating^1.15): 130.22
+   - Vice Captain Bonus (0.5 * rating^1.15): 52.27
+   - Squad Balance Bonus (30 - Penalty*4): 18
+   - Efficiency Bonus (15 - |Spent-110|*0.3): 18.67
+   - Brand Bonus (NormalizedBrand * 5): 3.37
