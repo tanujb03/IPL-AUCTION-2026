@@ -64,7 +64,7 @@ async function generateInstance(n) {
 (10, 'Lucknow Super Giants', 'LSG', 40.00, '/teams/lsg.png', '#A72056');\n\n`;
 
     // 3. Teams (Unique Passwords)
-    const teams = [
+    const defaultTeams = [
         { name: 'Team Alpha', user: 'alpha' },
         { name: 'Team Bravo', user: 'bravo' },
         { name: 'Team Charlie', user: 'charlie' },
@@ -76,6 +76,34 @@ async function generateInstance(n) {
         { name: 'Team India', user: 'india' },
         { name: 'Team Juliet', user: 'juliet' }
     ];
+
+    const generateUser = (name, i) => {
+        let u = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (u.length > 20) u = u.substring(0, 20);
+        if (u.length === 0) u = `team${i}`;
+        return u;
+    };
+
+    const instanceTeamsMap = {
+        1: [
+            "Bombay Boozers", "Bid Lords", "Strikers", "RR", "Babita Blasters",
+            "People's Ameen Party", "Zenith Strikers", "Logic legends", "Thala Knight Challengers", "Villains"
+        ].map((t, i) => ({ name: t, user: generateUser(t, i) })),
+        2: [
+            "Yashowardhan Deshmukh", "Strategic Strikers", "Royal Challengers Mumbai", "Gully Gang", "Rangers",
+            "DOPA", "Conquerors", "chambal ke daaku", "Bibtya Warriors", "AN1227"
+        ].map((t, i) => ({ name: t, user: generateUser(t, i) })),
+        3: [
+            "The jews", "Tech_Spaces 11", "Hyderabadi chicken biryani", "Pillukombdi", "Bidmasters XI",
+            "Thunder Strikers", "401", "Ipl ka tambu", "Dhoni Ka Bambu", "Choco 11"
+        ].map((t, i) => ({ name: t, user: generateUser(t, i) })),
+        4: [
+            "Bid Masters X1", "Royal Paltans", "VISTAR X1", "Elite Elevens", "Mr Nags",
+            "50 Shades of Strategy", "Yash Kate", "The Dominators", "Achievers", "Harsh"
+        ].map((t, i) => ({ name: t, user: generateUser(t, i) }))
+    };
+
+    const teams = instanceTeamsMap[n] || defaultTeams;
 
     const teamCreds = [];
     sql += `INSERT INTO "Team" (id, name, username, password_hash, purse_remaining, squad_count) VALUES\n`;
