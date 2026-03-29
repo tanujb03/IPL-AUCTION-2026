@@ -1,0 +1,21 @@
+Riddle Players:
+
+Squad (15): BAT:3 BOWL:5 AR:5 WK:2 OVS:5
+BEST TOP 11:
+- 11 Sandeep Sharma [BOWL/OVS:false/Rating:93] (C)
+- 12 Trent Boult [BOWL/OVS:true/Rating:92] (VC)
+- 18 Rashid Khan [AR/OVS:true/Rating:89] 
+- 22 Kagiso Rabada [BOWL/OVS:true/Rating:85] 
+- 39 Nicholas Pooran [WK/OVS:true/Rating:78] 
+- 79 Prabhsimran Singh [WK/OVS:false/Rating:69] 
+- 102 Angkrish Raghuvanshi [BAT/OVS:false/Rating:65] 
+- 109 Abdul Samad [AR/OVS:false/Rating:63] 
+- 123 Ayush Mhatre [BAT/OVS:false/Rating:61] 
+- 137 Jayant Yadav [AR/OVS:false/Rating:58] 
+- 146 Anshul Kamboj [AR/OVS:false/Rating:57] 
+
+Base Score + Cap/VC: 1801.04
+Balance Bonus: 10
+Efficiency Bonus: 13.75
+Brand Bonus: 40.00
+FINAL SCORE: 1864.79

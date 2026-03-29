@@ -25,20 +25,25 @@ function parseCSV(filePath) {
     });
 }
 
-function parseRiddles(filePath) {
+function parseListRiddles(filePath) {
     if (!fs.existsSync(filePath)) return {};
     const content = fs.readFileSync(filePath, 'utf-8');
     const riddlesHash = {};
-    const blocks = content.split(/Riddle Card \d+:\s*/i).filter(b => b.trim());
+    
+    const blocks = content.split(/Name:\s*/i).filter(b => b.trim());
     blocks.forEach(block => {
         const lines = block.split(/\r?\n/).filter(l => l.trim());
-        const title = lines[0]?.trim();
-        const questionLine = lines.find(l => /^Question:/i.test(l));
-        const question = questionLine ? questionLine.replace(/^Question:\s*/i, '').trim() : '';
-        const answerLine = lines.find(l => /^Answer:/i.test(l));
-        const answer = answerLine ? answerLine.replace(/^Answer:\s*/i, '').trim() : '';
-        if (answer) {
-            riddlesHash[answer] = { title, question };
+        let answer = lines[0]?.trim();
+        
+        // Fix known typos from text files
+        if (answer.toLowerCase() === 'ayush badnoi') {
+            answer = 'Ayush Badoni';
+        }
+        
+        const question = lines.slice(1).join(' ').replace(/^Who am I\?$/i, '').trim();
+        
+        if (answer && question) {
+            riddlesHash[answer.toLowerCase()] = { title: 'Mystery Player', question: question };
         }
     });
     return riddlesHash;
@@ -84,10 +89,7 @@ async function generateInstance(n) {
     ];
 
     const generateUser = (name, i) => {
-        let u = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-        if (u.length > 20) u = u.substring(0, 20);
-        if (u.length === 0) u = `team${i}`;
-        return u;
+        return name;
     };
 
     const instanceTeamsMap = {
@@ -106,6 +108,22 @@ async function generateInstance(n) {
         4: [
             "Bid Masters X1", "Royal Paltans", "VISTAR X1", "Elite Elevens", "Mr Nags",
             "50 Shades of Strategy", "Yash Kate", "The Dominators", "Achievers", "Harsh"
+        ].map((t, i) => ({ name: t, user: generateUser(t, i) })),
+        5: [
+            "Freak Factor", "Mard Mavle", "Tapri Titans", "Bad dies XI", "Auction Acers",
+            "Mumbai Super Kings (MSK)", "Triple Strikers", "Vadapav Lovers", "Major XI", "Team challengers"
+        ].map((t, i) => ({ name: t, user: generateUser(t, i) })),
+        6: [
+            "Humorless", "Shawarma", "NAMO", "Teddy 11", "Dhurandhar",
+            "Boundary Breakers", "Team Diamonds", "mavericks", "Dhurandar XI", "Vajra warriors"
+        ].map((t, i) => ({ name: t, user: generateUser(t, i) })),
+        7: [
+            "Hitman warriors", "Team Sher", "Crowned Killers", "Elex Titans XI", "Royal Challengers Bhavans (RCB)",
+            "Mumbai Indians", "Imperial Warriors", "Heavy Balls XI", "Reverse cowboys", "Broke But Bidding"
+        ].map((t, i) => ({ name: t, user: generateUser(t, i) })),
+        8: [
+            "404 Not Found", "Garden Boys", "Hamza Ali Mazari", "SportsOnTop", "Choco Indians",
+            "3 Musketeers", "Tung Tung Sahur", "Kelloggzzz 11", "Ex. Heads", "MI2020"
         ].map((t, i) => ({ name: t, user: generateUser(t, i) }))
     };
 
@@ -122,9 +140,15 @@ async function generateInstance(n) {
     }
     sql += `\n`;
 
-    // 4. Players (from sequence CSV and Riddle TXT)
+    // 4. Players (from sequence CSV and manual riddle overrides)
     const players = parseCSV(`resources/sequence_${n}.csv`);
-    const riddlesData = parseRiddles(`resources/sequence_${n}_riddles.txt`);
+    
+    const day2Riddles = {
+        5: ["Tilak Varma", "Romario Shepherd"],
+        6: ["Deepak Chahar", "Ryan Rickelton"],
+        7: ["Heinrich Klaasen", "Digvesh Singh Rathi"],
+        8: ["Shimron Hetmyer", "Rinku Singh"]
+    };
 
     sql += `INSERT INTO "Player" (id, rank, name, team, role, category, pool, grade, rating, nationality, nationality_raw, base_price, is_riddle, riddle_title, riddle_question, legacy, url, matches, bat_runs, bat_sr, bat_average, bowl_wickets, bowl_eco, bowl_avg, sub_scoring, sub_impact, sub_consistency, sub_experience, sub_wicket_taking, sub_economy, sub_efficiency, sub_batting, sub_bowling, sub_versatility) VALUES\n`;
     
@@ -133,10 +157,26 @@ async function generateInstance(n) {
         const id = crypto.randomUUID();
         playerIds.push({ name: p.Player, id: id, rank: parseInt(p.Rank) });
         
-        const riddleInfo = riddlesData[p.Player];
-        const isRiddle = !!riddleInfo;
-        const riddleTitle = riddleInfo ? riddleInfo.title : null;
-        const riddleQuestion = riddleInfo ? riddleInfo.question : null;
+        const pNameLower = p.Player.toLowerCase();
+        
+        // Manual override for Ashutosh Sharma
+        if (pNameLower === 'ashutosh sharma') {
+            p.Sub_Bowling = 7;
+            p.Sub_Versatility = 14;
+        }
+
+        // Manual override for Eshan Malinga
+        if (pNameLower === 'eshan malinga') {
+            p.Nationality = 'Sri Lankan';
+        }
+
+        let isRiddle = false;
+        let riddleTitle = null;
+        let riddleQuestion = null;
+        
+        if (day2Riddles[n] && day2Riddles[n].some(rn => rn.toLowerCase() === pNameLower)) {
+            isRiddle = true;
+        }
         
         // Map nationality to Enum values
         const nationality = p.Nationality.toUpperCase() === 'INDIAN' ? 'INDIAN' : 'OVERSEAS';
@@ -179,7 +219,7 @@ async function generateInstance(n) {
     sql += `INSERT INTO "AuctionSequence" (id, name, type, sequence_items) VALUES\n(3, 'Player Auction ${n}', 'PLAYER', ${esc(JSON.stringify(seqItems))});\n\n`;
 
     // 8. State
-    sql += `INSERT INTO "AuctionState" (id, phase, auction_day) VALUES (1, 'NOT_STARTED', 'Day 1');\n\n`;
+    sql += `INSERT INTO "AuctionState" (id, phase, auction_day) VALUES (1, 'NOT_STARTED', 'Day 2');\n\n`;
 
     fs.writeFileSync(`instance_${n}_init.sql`, sql);
     
@@ -193,12 +233,12 @@ async function generateInstance(n) {
 
 async function main() {
     const allCreds = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 5; i <= 8; i++) {
         const creds = await generateInstance(i);
         allCreds.push(creds);
     }
 
-    let masterTxt = "========= MASTER CREDENTIALS FOR ALL 5 ROOMS =========\n\n";
+    let masterTxt = "========= MASTER CREDENTIALS FOR DAY 2 (ROOMS 5-8) =========\n\n";
     allCreds.forEach(c => {
         masterTxt += `ROOM ${c.instance}\n`;
         masterTxt += `--------------------------------------------------\n`;
@@ -211,8 +251,8 @@ async function main() {
         masterTxt += `\n\n`;
     });
 
-    fs.writeFileSync('MASTER_CREDENTIALS.txt', masterTxt);
-    console.log("✅ All 5 instances generated! MASTER_CREDENTIALS.txt created.");
+    fs.writeFileSync('DAY2_CREDENTIALS.txt', masterTxt);
+    console.log("✅ Instances 5-8 generated! DAY2_CREDENTIALS.txt created.");
 }
 
 main().catch(console.error);

@@ -38,6 +38,7 @@ export interface Player {
 async function fetchJSON<T>(path: string): Promise<T> {
     const res = await fetch(`${API_URL}${path}`, {
         headers: { 'Content-Type': 'application/json' },
+        cache: 'no-store', // Disable caching to ensure fresh data after sales/unmasking
     });
     if (!res.ok) {
         const err = await res.json().catch(() => ({ error: res.statusText }));

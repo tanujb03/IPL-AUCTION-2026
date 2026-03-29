@@ -381,6 +381,7 @@ export default function TeamDashboard({ params }: { params: Promise<{ id: string
 
         const unbindPlayerSold = on('PLAYER_SOLD', () => {
             requestState();
+            getAllPlayers().then(setAllPlayers).catch(err => console.error("Failed to re-fetch players:", err));
         });
         if (unbindPlayerSold) unsubs.push(unbindPlayerSold);
 
